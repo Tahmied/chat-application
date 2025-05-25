@@ -16,10 +16,14 @@ io.on('connection' , (socket)=>{
     socket.on('toAll' , (data)=>{
         console.log(data)
         const response = {
-            'message' : 'data.message',
+            'message' : data.message,
             'user' : socket.id
         }
         io.emit('everyone' , response)
+    })
+    socket.on('joinRoomOne' , (data)=>{
+        socket.join('roomOne')
+        io.to('roomOne').emit( 'joinedRoomOne' ,`${socket.id} joined room one`)
     })
 } )
 

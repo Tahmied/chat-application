@@ -36,6 +36,17 @@
             document.body.appendChild(text)
         })
     </script>
+    <script>
+        const joinOneBtn = document.querySelector('.join-room-one')
+        joinOneBtn.addEventListener('click' , (e)=>{
+            socket.emit('joinRoomOne' , 'I want to join room one')
+        })
+        socket.on('joinedRoomOne' , function(data){
+            const text = document.createElement('p')
+            text.innerHTML = data
+            document.body.appendChild(text)
+        })
+    </script>
 
 </body>
 </html>
