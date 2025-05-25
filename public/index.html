@@ -9,7 +9,7 @@
     <h1>We are learning code</h1>
     <input type="text" class="input">
     <button class="sendAll">Send message to all</button>
-    <button class="sendRoomONe">Send message to Room one only</button>
+    <button class="sendRoomOne">Send message to Room one only</button>
     <button class="join-room-one">Join Room One</button>
 
 
@@ -23,7 +23,7 @@
         // sends the data to the backend
         sendButton.addEventListener('click' , (e)=>{
             const data = {
-                'roomId' : 'roomOne',
+                'roomId' : 'everyone',
                 'message' : input.value
             }
             e.preventDefault()
@@ -35,8 +35,13 @@
             text.innerHTML = `${data.user} : ${data.message} `
             document.body.appendChild(text)
         })
-    </script>
-    <script>
+
+        const sendRoomOne = document.querySelector('.sendRoomOne')
+        sendRoomOne.addEventListener('click' , (e)=>{
+            e.preventDefault()
+            socket.emit('toRoomOne' , input.value)
+        })
+        
         const joinOneBtn = document.querySelector('.join-room-one')
         joinOneBtn.addEventListener('click' , (e)=>{
             socket.emit('joinRoomOne' , 'I want to join room one')
@@ -47,6 +52,7 @@
             document.body.appendChild(text)
         })
     </script>
+  
 
 </body>
 </html>

@@ -25,6 +25,9 @@ io.on('connection' , (socket)=>{
         socket.join('roomOne')
         io.to('roomOne').emit( 'joinedRoomOne' ,`${socket.id} joined room one`)
     })
+    socket.on('toRoomOne' , (data)=>{
+        io.to('roomOne').emit('joinedRoomOne' ,data )
+    })
 } )
 
 server.listen(8080 , ()=>{
