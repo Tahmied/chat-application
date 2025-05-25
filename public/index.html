@@ -3,25 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat App</title>
+    <title>socket </title>
 </head>
 <body>
-    <h1>I'm learning socket IO</h1>
+    <h1>We are learning code</h1>
+    <input type="text" class="input">
+    <button class="sendAll">Send message to all</button>
+    <button class="sendRoomONe">Send message to Room one only</button>
+    <button class="join-room-one">Join Room One</button>
 
-    <input type="text" id="message" class="message">
-    <button class="send">Send message</button>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
         var socket = io()
-        const input = document.querySelector('.message')
-        document.querySelector('.send').addEventListener('click' , (e)=>{
-            socket.emit('message' , input.value)
-            input.value = ''
+        
+        const input = document.querySelector('.input')
+        const sendButton = document.querySelector('.sendAll')
+        
+        // sends the data to the backend
+        sendButton.addEventListener('click' , (e)=>{
+            const data = {
+                'roomId' : 'roomOne',
+                'message' : input.value
+            }
+            e.preventDefault()
+            socket.emit('toAll' , data)
         })
-        socket.on('toFrontend' , function(data){
-            console.log(data)
+        // send to all the users
+        socket.on('everyone' , function(data){
+            const text = document.createElement('p')
+            text.innerHTML = `${data.user} : ${data.message} `
+            document.body.appendChild(text)
         })
     </script>
+
 </body>
 </html>
